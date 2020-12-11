@@ -76,7 +76,7 @@ try:
    
         for slot in available_slots:
             a_slot = datetime.strptime(str(slot.text).split()[5] + str(slot.text).split()[6], '%I:%M%p')
-            if start_range <= a_slot && end_range >= a_slot:
+            if start_range <= a_slot and end_range >= a_slot:
                 slot.find_element_by_xpath('..').click()
                 driver.implicitly_wait(10)
                 driver.find_element_by_id("dialog_book_yes").click()
