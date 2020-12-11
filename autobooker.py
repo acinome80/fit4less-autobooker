@@ -50,7 +50,7 @@ try:
     any_slots_available = False
     for i in range(3):        
         booking_date = str(datetime.now().date() + timedelta(days=i))
-        curr_day = booking_date.weekday() # 0-4 is weekday, 5-6 is weekend
+        curr_day = (datetime.now().date() + timedelta(days=i)).weekday() # 0-4 is weekday, 5-6 is weekend
         driver.find_element_by_id("btn_date_select").click()  # day selector
         driver.implicitly_wait(20)
         driver.find_element_by_id("date_" + booking_date).click()
