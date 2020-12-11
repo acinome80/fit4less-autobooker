@@ -48,6 +48,7 @@ try:
     
     driver.implicitly_wait(5)
     any_slots_available = False
+    booked_appointment = False
     for i in range(3):        
         booking_date = str(datetime.now().date() + timedelta(days=i))
         curr_day = (datetime.now().date() + timedelta(days=i)).weekday() # 0-4 is weekday, 5-6 is weekend
@@ -82,12 +83,16 @@ try:
                 driver.find_element_by_id("dialog_book_yes").click()
                 driver.implicitly_wait(10)
                 print("Booked {} on {}".format(a_slot.strftime("%I:%M %p"),booking_date))
+                booked_appointment = True
                 break
             else:
                 print("Skipping slot: {}".format(a_slot.strftime("%I:%M %p")))
     if any_slots_available == False:
         print("No available slots at all")
         exit(1)
+    elif booked_appointment == False:
+        print("No appointment booked.")
+        exit(1)        
 
 except Exception as err:
     print("Seems like we're fully booked!")
