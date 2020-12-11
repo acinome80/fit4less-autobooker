@@ -68,7 +68,7 @@ try:
             
         #d_slot = datetime.strptime(str(os.getenv("TIME_SLOT"+str(i))), '%I:%M%p')
         #d_slot = datetime.strptime("10:00AM", '%I:%M%p')
-        start_range = d_slot = datetime.strptime("7:00PM", '%I:%M%p')
+        start_range = d_slot = datetime.strptime("6:00PM", '%I:%M%p')
         end_range = d_slot = datetime.strptime("10:00PM", '%I:%M%p')
         if curr_day >= 5:
             start_range = d_slot = datetime.strptime("11:00AM", '%I:%M%p')
