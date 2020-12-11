@@ -47,7 +47,7 @@ try:
                 break
     
     driver.implicitly_wait(5)
-    any_slots_available = false
+    any_slots_available = False
     for i in range(3):        
         booking_date = str(datetime.now().date() + timedelta(days=i))
         curr_day = booking_date.weekday() # 0-4 is weekday, 5-6 is weekend
@@ -64,7 +64,7 @@ try:
             print("No available time slots for " + booking_date)
             continue
         else:
-            any_slots_available = true
+            any_slots_available = True
             
         #d_slot = datetime.strptime(str(os.getenv("TIME_SLOT"+str(i))), '%I:%M%p')
         #d_slot = datetime.strptime("10:00AM", '%I:%M%p')
@@ -85,7 +85,7 @@ try:
                 break
             else:
                 print("Skipping slot: {}".format(a_slot.strftime("%I:%M %p")))
-    if any_slots_available == false:
+    if any_slots_available == False:
         print("No available slots at all")
         exit(1)
 
