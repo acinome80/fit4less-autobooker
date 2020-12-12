@@ -60,6 +60,20 @@ try:
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         driver.implicitly_wait(5)
 
+        # Check current reservations
+        reserved_slots = driver.find_element_by_class_name("reserved-slots").find_elements_by_class_name("time-slot-box")
+        already_have_reservation = False
+        for slot in reserved_slots:
+            a_slot = datetime.strptime(str(slot.text).split()[5] + str(slot.text).split()[6], '%I:%M%p')
+            reserved_day = a_slot.weekday()
+            if curr_day == reserved_day:
+                print("Already have reservation for the day: ", booking_date)
+                already_have_reservation = True
+                break
+        if already_have_reservation == True:
+            continue
+                
+        
         # check available_slots class 2nd index -> see if child elements exist
         available_slots = driver.find_elements_by_class_name("available-slots")[1].find_elements_by_class_name("time-slot-box")
         if len(available_slots) == 0:
