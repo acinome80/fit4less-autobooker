@@ -67,16 +67,14 @@ try:
 
         # Check current reservations
         already_have_reservation = False
-        try:
+        try:            
             reserved_slots = driver.find_element_by_class_name("reserved-slots").find_elements_by_class_name("time-slot-box")      
-            for slot in reserved_slots:
-                if str(curr_dt.day + i) == str(slot.text).split()[4]:
+            for slot in reserved_slots:                
+                if str(curr_dt.day + i) == str(slot.text).split()[3]:
                     print("Already have reservation for the day: ", booking_date)
                     already_have_reservation = True
                     break
         except:
-            print(traceback.format_exc())
-            print(str(err))
             pass # No reserved appointments
         if already_have_reservation == True:
             continue
