@@ -37,28 +37,29 @@ try:
     print("Logged In!")
 
     # Find your club
-    if "F4L_CLUB" in os.environ:
-        driver.find_element_by_id("btn_club_select").click()
-        driver.implicitly_wait(3)
-        all_clubs = driver.find_element_by_id("modal_clubs").find_element_by_class_name("dialog-content").find_elements_by_class_name("button")
-        for club in all_clubs:
-            if os.getenv("F4L_CLUB") == club.text:
-                print("Club found: ", club.text)
-                club.click()
-                break
+#     if "F4L_CLUB" in os.environ:
+#         driver.find_element_by_id("btn_club_select").click()
+#         driver.implicitly_wait(3)
+#         all_clubs = driver.find_element_by_id("modal_clubs").find_element_by_class_name("dialog-content").find_elements_by_class_name("button")
+#         for club in all_clubs:
+#             if os.getenv("F4L_CLUB") == club.text:
+#                 print("Club found: ", club.text)
+#                 club.click()
+#                 break
     
     driver.implicitly_wait(5)
     any_slots_available = False
     booked_appointment = False
+    curr_dt = datetime.now(timezone('est'))
+    curr_time = datetime.strptime(str(curr_dt.hour) + ":" + str(curr_dt.minute), '%H:%M')
     for i in range(3):        
-        booking_date = str(datetime.now(timezone('est')).date() + timedelta(days=i))
-        curr_dt = datetime.now(timezone('est'))
-        curr_time = datetime.strptime(str(curr_dt.hour) + ":" + str(curr_dt.minute), '%H:%M')
-        curr_day = (datetime.now(timezone('est')).date() + timedelta(days=i)).weekday() # 0-4 is weekday, 5-6 is weekend
+        booking_date = str(curr_dt.date() + timedelta(days=i))
+        curr_day = booking_date.weekday() # 0-4 is weekday, 5-6 is weekend
+        
         driver.find_element_by_id("btn_date_select").click()  # day selector
-        driver.implicitly_wait(20)
+        driver.implicitly_wait(13)
         driver.find_element_by_id("date_" + booking_date).click()
-        driver.implicitly_wait(20)
+        driver.implicitly_wait(13)
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         driver.implicitly_wait(5)
 
@@ -67,7 +68,7 @@ try:
         try:
             reserved_slots = driver.find_element_by_class_name("reserved-slots").find_elements_by_class_name("time-slot-box")      
             for slot in reserved_slots:
-                if str(datetime.now(timezone('est')).day + i) == str(slot.text).split()[4]:
+                if str(curr_dt.day + i) == str(slot.text).split()[4]:
                     print("Already have reservation for the day: ", booking_date)
                     already_have_reservation = True
                     break
