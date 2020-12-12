@@ -33,10 +33,16 @@ workflows:
   nightly:
     triggers:
       - schedule:
-          cron: "0 * * * *"
+          cron: "59 4 * * *"
           filters:
             branches:
               only:
                 - main
+      - schedule:
+          cron: "0,2,10 5 * * *"
+          filters:
+            branches:
+              only:
+                - main        
     jobs:
       - build
