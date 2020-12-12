@@ -64,7 +64,7 @@ try:
         reserved_slots = driver.find_element_by_class_name("reserved-slots").find_elements_by_class_name("time-slot-box")
         already_have_reservation = False
         for slot in reserved_slots:
-            if str(datetime.now(timezone('est')).day) == str(slot.text).split()[4]:
+            if str(datetime.now(timezone('est')).day + i) == str(slot.text).split()[4]:
                 print("Already have reservation for the day: ", booking_date)
                 already_have_reservation = True
                 break
@@ -110,5 +110,6 @@ try:
 except Exception as err:
     print("Seems like we're fully booked!")
     print(str(err))
+    exit(1)
 finally:
     driver.quit()
