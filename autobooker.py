@@ -9,7 +9,6 @@ from selenium.webdriver.common.keys import Keys
 load_dotenv()
 # set permissions for local chromedriver to test locally
 start_url = "https://myfit4less.gymmanager.com/portal/login.asp"
-#booking_date = str(datetime.now().date() + timedelta(days=int(os.getenv("DAYS")) or 2))
 chrome_options = Options()
 
 # first condition just for debugging locally
@@ -53,12 +52,12 @@ try:
     curr_dt = datetime.now(timezone('est'))
     curr_time = datetime.strptime(str(curr_dt.hour) + ":" + str(curr_dt.minute), '%H:%M')
     for i in range(3):        
-        booking_date = str(curr_dt.date() + timedelta(days=i))
+        booking_date = curr_dt.date() + timedelta(days=i)
         curr_day = booking_date.weekday() # 0-4 is weekday, 5-6 is weekend
         
         driver.find_element_by_id("btn_date_select").click()  # day selector
         driver.implicitly_wait(13)
-        driver.find_element_by_id("date_" + booking_date).click()
+        driver.find_element_by_id("date_" + str(booking_date)).click()
         driver.implicitly_wait(13)
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         driver.implicitly_wait(5)
