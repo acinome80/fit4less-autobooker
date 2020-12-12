@@ -95,7 +95,7 @@ try:
         for slot in available_slots:
             a_slot = datetime.strptime(str(slot.text).split()[5] + str(slot.text).split()[6], '%I:%M%p')
             
-            if a_slot == curr_time or abs((a_slot - curr_time).total_seconds() / 60) <= 30:
+            if a_slot.hour == curr_time.hour or abs((a_slot - curr_time).total_seconds() / 60) <= 30:
                 print("Time slot: {} is too close to current time. Curr time: {}".format(a_slot.strftime("%I:%M %p"), curr_time.strftime("%I:%M %p")))
                 continue
                 
