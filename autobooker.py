@@ -75,6 +75,8 @@ try:
                     already_have_reservation = True
                     break
         except:
+            print(traceback.format_exc())
+            print(str(err))
             pass # No reserved appointments
         if already_have_reservation == True:
             continue
