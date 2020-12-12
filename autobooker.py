@@ -82,7 +82,7 @@ try:
         # check available_slots class 2nd index -> see if child elements exist
         available_slots = driver.find_elements_by_class_name("available-slots")[1].find_elements_by_class_name("time-slot-box")
         if len(available_slots) == 0:
-            print("No available time slots for " + booking_date)
+            print("No available time slots for ", booking_date)
             continue
         else:
             any_slots_available = True
