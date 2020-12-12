@@ -26,6 +26,7 @@ else:
 driver = webdriver.Chrome(os.getenv("WEBDRIVER_PATH"), options=chrome_options)
 driver.get(start_url)
 
+any_booked = False
 try:
     # Login
     email_input = driver.find_element_by_id("emailaddress")
@@ -107,6 +108,7 @@ try:
                 driver.implicitly_wait(10)
                 driver.find_element_by_id("dialog_book_yes").click()
                 driver.implicitly_wait(10)
+                any_booked = True
                 print("Booked {} on {}".format(a_slot.strftime("%I:%M %p"),booking_date))
                 booked_appointment = True
                 break
@@ -121,8 +123,8 @@ try:
 
 except Exception as err:
     print("Seems like we're fully booked!")
-    print(str(err))
     print(traceback.format_exc())
-    exit(1)
+    if any_booked == False:
+        exit(1)
 finally:
     driver.quit()
