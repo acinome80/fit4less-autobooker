@@ -6,6 +6,9 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 
+import traceback
+
+
 load_dotenv()
 # set permissions for local chromedriver to test locally
 start_url = "https://myfit4less.gymmanager.com/portal/login.asp"
@@ -119,6 +122,7 @@ try:
 except Exception as err:
     print("Seems like we're fully booked!")
     print(str(err))
+    print(traceback.format_exc())
     exit(1)
 finally:
     driver.quit()
