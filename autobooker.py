@@ -52,6 +52,8 @@ try:
     booked_appointment = False
     for i in range(3):        
         booking_date = str(datetime.now(timezone('est')).date() + timedelta(days=i))
+        curr_dt = datetime.now(timezone('est'))
+        curr_time = datetime.strptime(str(curr_dt.hour) + ":" + str(curr_dt.minute), '%H:%M')
         curr_day = (datetime.now(timezone('est')).date() + timedelta(days=i)).weekday() # 0-4 is weekday, 5-6 is weekend
         driver.find_element_by_id("btn_date_select").click()  # day selector
         driver.implicitly_wait(20)
@@ -73,8 +75,7 @@ try:
             pass # No reserved appointments
         if already_have_reservation == True:
             continue
-                
-        
+                        
         # check available_slots class 2nd index -> see if child elements exist
         available_slots = driver.find_elements_by_class_name("available-slots")[1].find_elements_by_class_name("time-slot-box")
         if len(available_slots) == 0:
@@ -82,17 +83,22 @@ try:
             continue
         else:
             any_slots_available = True
-            
-        #d_slot = datetime.strptime(str(os.getenv("TIME_SLOT"+str(i))), '%I:%M%p')
-        #d_slot = datetime.strptime("10:00AM", '%I:%M%p')
+        
+        # define range of wanted time periods
         start_range = d_slot = datetime.strptime("7:00PM", '%I:%M%p')
         end_range = d_slot = datetime.strptime("10:00PM", '%I:%M%p')
         if curr_day >= 5:
             start_range = d_slot = datetime.strptime("11:00AM", '%I:%M%p')
             end_range = d_slot = datetime.strptime("6:00PM", '%I:%M%p')
    
+        # check the available slots.
         for slot in available_slots:
             a_slot = datetime.strptime(str(slot.text).split()[5] + str(slot.text).split()[6], '%I:%M%p')
+            
+            if a_slot == curr_time or abs((a_slot - curr_time).total_seconds() / 60) <= 30:
+                print("Time slot: {} is too close to current time. Curr time: {}".format(a_slot.strftime("%I:%M %p"), curr_time.strftime("%I:%M %p")))
+                continue
+                
             if start_range <= a_slot and end_range >= a_slot:
                 slot.find_element_by_xpath('..').click()
                 driver.implicitly_wait(10)
