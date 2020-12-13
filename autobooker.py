@@ -54,8 +54,8 @@ try:
     any_slots_available = False
     booked_appointment = False
     curr_dt = datetime.now(timezone('est'))
-    curr_time = datetime.strptime(str(curr_dt.hour) + ":" + str(curr_dt.minute), '%H:%M')
-    days_list = os.getenv("DAYS").split(",")
+    curr_time = datetime.strptime(str(curr_dt.hour) + ":" + str(curr_dt.minute), '%H:%M')   
+    days_list = [int(x) for x in os.getenv("DAYS").split(",")]
     for i in days_list:        
         booking_date = curr_dt.date() + timedelta(days=i)
         curr_day = booking_date.weekday() # 0-4 is weekday, 5-6 is weekend
