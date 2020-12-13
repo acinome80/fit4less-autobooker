@@ -55,16 +55,19 @@ try:
     booked_appointment = False
     curr_dt = datetime.now(timezone('est'))
     curr_time = datetime.strptime(str(curr_dt.hour) + ":" + str(curr_dt.minute), '%H:%M')
-    for i in range(3):        
+    range_start = int(os.getenv("START_DAY"))
+    range_end = int(os.getenv("START_DAY"))
+    days_list = os.getenv("DAYS").split(",")
+    for i in days_list:        
         booking_date = curr_dt.date() + timedelta(days=i)
         curr_day = booking_date.weekday() # 0-4 is weekday, 5-6 is weekend
         
         driver.find_element_by_id("btn_date_select").click()  # day selector
-        driver.implicitly_wait(13)
+        driver.implicitly_wait(10)
         driver.find_element_by_id("date_" + str(booking_date)).click()
-        driver.implicitly_wait(13)
+        driver.implicitly_wait(10)
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        driver.implicitly_wait(5)
+        driver.implicitly_wait(4)
 
         # Check current reservations
         already_have_reservation = False
