@@ -55,8 +55,6 @@ try:
     booked_appointment = False
     curr_dt = datetime.now(timezone('est'))
     curr_time = datetime.strptime(str(curr_dt.hour) + ":" + str(curr_dt.minute), '%H:%M')
-    range_start = int(os.getenv("START_DAY"))
-    range_end = int(os.getenv("START_DAY"))
     days_list = os.getenv("DAYS").split(",")
     for i in days_list:        
         booking_date = curr_dt.date() + timedelta(days=i)
