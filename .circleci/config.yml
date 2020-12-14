@@ -37,6 +37,12 @@ workflows:
           filters:
             branches:
               only:
-                - main                    
+                - main
+      - schedule:
+          cron: "20,50 * * * *"
+          filters:
+            branches:
+              only:
+                - main                
     jobs:
       - build
