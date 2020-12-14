@@ -69,11 +69,11 @@ try:
         curr_day = booking_date.weekday() # 0-4 is weekday, 5-6 is weekend
         
         driver.find_element_by_id("btn_date_select").click()  # day selector
-        driver.implicitly_wait(10)
+        driver.implicitly_wait(3)
         driver.find_element_by_id("date_" + str(booking_date)).click()
-        driver.implicitly_wait(10)
+        driver.implicitly_wait(5)
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        driver.implicitly_wait(4)
+        driver.implicitly_wait(3)
 
         # Check current reservations
         already_have_reservation = False
@@ -103,11 +103,11 @@ try:
             any_slots_available = True
         
         # define range of wanted time periods
-        start_range = d_slot = datetime.strptime("7:00PM", '%I:%M%p')
-        end_range = d_slot = datetime.strptime("10:00PM", '%I:%M%p')
+        start_range = datetime.strptime("7:00PM", '%I:%M%p')
+        end_range = datetime.strptime("10:00PM", '%I:%M%p')
         if curr_day >= 5:
-            start_range = d_slot = datetime.strptime("11:00AM", '%I:%M%p')
-            end_range = d_slot = datetime.strptime("6:00PM", '%I:%M%p')
+            start_range = datetime.strptime("11:00AM", '%I:%M%p')
+            end_range = datetime.strptime("6:00PM", '%I:%M%p')
    
         # check the available slots.
         for slot in reversed(available_slots):
@@ -119,9 +119,9 @@ try:
                 
             if start_range <= a_slot and end_range >= a_slot:
                 slot.find_element_by_xpath('..').click()
-                driver.implicitly_wait(10)
+                driver.implicitly_wait(3)
                 driver.find_element_by_id("dialog_book_yes").click()
-                driver.implicitly_wait(10)
+                driver.implicitly_wait(5)
                 any_booked = True
                 print("Booked {} on {}".format(a_slot.strftime("%I:%M %p"),booking_date))
                 booked_appointment = True
