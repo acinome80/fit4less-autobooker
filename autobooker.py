@@ -58,11 +58,9 @@ try:
     curr_time = datetime.strptime(str(curr_dt.hour) + ":" + str(curr_dt.minute), '%H:%M')   
     days_list = [int(x) for x in os.getenv("DAYS").split(",")]
 
-    
-    curr_dt = datetime.now(timezone('est'))
-    if curr_dt.hour == 15 and curr_dt.minute >= 0:
+    if curr_dt.hour == 23 and curr_dt.minute >= 58:
         print("Waiting for 12:00AM..")
-        while datetime.now(timezone('est')).minute == 11 or datetime.now(timezone('est')).minute == 12:            
+        while datetime.now(timezone('est')).hour == 23:            
             time.sleep(0.5)
         print("Reached 12:00AM!")            
     
