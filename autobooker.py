@@ -41,15 +41,15 @@ try:
     print("Logged In!")
 
     # Find your club
-#     if "F4L_CLUB" in os.environ:
-#         driver.find_element_by_id("btn_club_select").click()
-#         driver.implicitly_wait(3)
-#         all_clubs = driver.find_element_by_id("modal_clubs").find_element_by_class_name("dialog-content").find_elements_by_class_name("button")
-#         for club in all_clubs:
-#             if os.getenv("F4L_CLUB") == club.text:
-#                 print("Club found: ", club.text)
-#                 club.click()
-#                 break
+    if "F4L_CLUB" in os.environ:
+        driver.find_element_by_id("btn_club_select").click()
+        driver.implicitly_wait(3)
+        all_clubs = driver.find_element_by_id("modal_clubs").find_element_by_class_name("dialog-content").find_elements_by_class_name("button")
+        for club in all_clubs:
+            if os.getenv("F4L_CLUB") == club.text:
+                print("Club found: ", club.text)
+                club.click()
+                break
     
     driver.implicitly_wait(5)
     any_slots_available = False
@@ -110,7 +110,7 @@ try:
             end_range = d_slot = datetime.strptime("6:00PM", '%I:%M%p')
    
         # check the available slots.
-        for slot in available_slots:
+        for slot in reversed(available_slots):
             a_slot = datetime.strptime(str(slot.text).split()[5] + str(slot.text).split()[6], '%I:%M%p')
             
             if a_slot.hour == curr_time.hour or abs((a_slot - curr_time).total_seconds() / 60) <= 30:
