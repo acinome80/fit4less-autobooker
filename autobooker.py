@@ -62,7 +62,7 @@ try:
     curr_dt = datetime.now(timezone('est'))
     if curr_dt.hour == 15 and curr_dt.minute >= 0:
         print("Waiting for 12:00AM..")
-        while datetime.now(timezone('est')).minute == 5:            
+        while datetime.now(timezone('est')).minute == 8:            
             time.sleep(0.5)
         print("Reached 12:00AM!")            
     
