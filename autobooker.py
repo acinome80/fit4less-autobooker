@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 import os
 from datetime import datetime, timedelta
 from pytz import timezone
+import time
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
@@ -56,6 +57,15 @@ try:
     curr_dt = datetime.now(timezone('est'))
     curr_time = datetime.strptime(str(curr_dt.hour) + ":" + str(curr_dt.minute), '%H:%M')   
     days_list = [int(x) for x in os.getenv("DAYS").split(",")]
+
+    
+    curr_dt = datetime.now(timezone('est'))
+    if curr_dt.hour == 15 and curr_dt.minute >= 0:
+        print("Waiting for 12:00AM..")
+        while datetime.now(timezone('est')).minute == 5:            
+            time.sleep(0.5)
+        print("Reached 12:00AM!")            
+    
     for i in days_list:        
         booking_date = curr_dt.date() + timedelta(days=i)
         curr_day = booking_date.weekday() # 0-4 is weekday, 5-6 is weekend
