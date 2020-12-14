@@ -122,15 +122,15 @@ try:
                 print("Skipping slot: {}".format(a_slot.strftime("%I:%M %p")))
     if any_slots_available == False:
         print("No available slots at all")
-        exit(1)
     elif booked_appointment == False:
         print("No appointment booked.")
-        exit(1)        
+    else:
+        exit(1)
 
 except Exception as err:
     print("Seems like we're fully booked!")
     print(traceback.format_exc())
-    if any_booked == False:
+    if any_booked == True:
         exit(1)
 finally:
     driver.quit()
