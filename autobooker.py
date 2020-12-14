@@ -103,21 +103,18 @@ try:
             any_slots_available = True
         
         # define range of wanted time periods
-        start_range = datetime.strptime("7:00PM", '%I:%M%p')
-        end_range = datetime.strptime("10:00PM", '%I:%M%p')
-        if curr_day >= 5:
-            start_range = datetime.strptime("11:00AM", '%I:%M%p')
-            end_range = datetime.strptime("6:00PM", '%I:%M%p')
-   
+        start_range = 11 if curr_day >= 5 else 19 #datetime.strptime("7:00PM", '%I:%M%p')
+        end_range = 18 if curr_day >= 5 else 22 #datetime.strptime("10:00PM", '%I:%M%p')       
+                    
         # check the available slots.
-        for slot in reversed(available_slots):
+        for slot in available_slots[::-1]:
             a_slot = datetime.strptime(str(slot.text).split()[5] + str(slot.text).split()[6], '%I:%M%p')
             
             if a_slot.hour == curr_time.hour or abs((a_slot - curr_time).total_seconds() / 60) <= 30:
                 print("Time slot: {} is too close to current time. Curr time: {}".format(a_slot.strftime("%I:%M %p"), curr_time.strftime("%I:%M %p")))
                 continue
                 
-            if start_range <= a_slot and end_range >= a_slot:
+            if start_range <= a_slot.hour and end_range >= a_slot.hour:
                 slot.find_element_by_xpath('..').click()
                 driver.implicitly_wait(3)
                 driver.find_element_by_id("dialog_book_yes").click()
