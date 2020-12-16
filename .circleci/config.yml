@@ -30,13 +30,13 @@ workflows:
   commit:
     jobs:
       - build
-  nightly:
-    triggers:
-      - schedule:
-          cron: "0,5,10,15,20,25,30,35,40,45,50,55 0,1,2,13,14,15,16,17,18,19,20,21,22,23 * * *"
-          filters:
-            branches:
-              only:
-                - main                
+  #nightly:
+    #triggers:
+      #- schedule:
+          #cron: "0,5,10,15,20,25,30,35,40,45,50,55 0,1,2,13,14,15,16,17,18,19,20,21,22,23 * * *"
+          #filters:
+            #branches:
+              #only:
+                #- main                
     jobs:
       - build
